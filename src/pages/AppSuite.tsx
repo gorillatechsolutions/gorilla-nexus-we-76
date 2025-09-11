@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -8,12 +8,14 @@ import { FaAppStoreIos, FaGlobe } from 'react-icons/fa';
 import { IoLogoGooglePlaystore } from 'react-icons/io5';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import ShareMenu from '@/components/ShareMenu';
 
 const AppSuite = () => {
   const [activeFilter, setActiveFilter] = useState('All Apps');
   const [searchTerm, setSearchTerm] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
-  const [copiedAppId, setCopiedAppId] = useState<number | null>(null);
+  const [shareMenuAppId, setShareMenuAppId] = useState<number | null>(null);
+  const shareMenuRef = useRef<HTMLDivElement>(null);
   const itemsPerPage = 8;
 
   const filters = ['All Apps', 'Mobile Apps', 'Web Apps', 'Desktop Apps'];
@@ -189,31 +191,21 @@ const AppSuite = () => {
     }
   };
 
-  const handleShare = async (app: any) => {
-    const shareData = {
-      title: `${app.name} - ${app.category} App`,
-      text: app.description,
-      url: `${window.location.origin}/apps/${app.id}`
+  const handleShare = (app: any) => {
+    setShareMenuAppId(shareMenuAppId === app.id ? null : app.id);
+  };
+
+  // Close share menu when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (shareMenuRef.current && !shareMenuRef.current.contains(event.target as Node)) {
+        setShareMenuAppId(null);
+      }
     };
 
-    if (navigator.share && navigator.canShare && navigator.canShare(shareData)) {
-      try {
-        await navigator.share(shareData);
-      } catch (error) {
-        console.log('Share was aborted');
-      }
-    } else {
-      // Fallback: copy to clipboard
-      const shareText = `Check out ${app.name}: ${app.description} ${shareData.url}`;
-      try {
-        await navigator.clipboard.writeText(shareText);
-        setCopiedAppId(app.id);
-        setTimeout(() => setCopiedAppId(null), 2000);
-      } catch (error) {
-        console.error('Failed to copy to clipboard:', error);
-      }
-    }
-  };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
 
   return (
     <>
@@ -305,21 +297,27 @@ const AppSuite = () => {
                 </div>
                 
                 {/* Right side content area with fit screen design */}
-                <div className="absolute top-4 right-4 flex items-center gap-2 z-10">
+                <div className="absolute top-4 right-4 flex items-center gap-2 z-10" ref={shareMenuAppId === app.id ? shareMenuRef : null}>
                   {/* Share button */}
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={() => handleShare(app)}
-                    className="w-8 h-8 p-0 bg-white/10 backdrop-blur-sm border-white/20 hover:bg-primary hover:text-primary-foreground transition-all duration-300"
-                    title="Share app"
-                  >
-                    {copiedAppId === app.id ? (
-                      <Check className="h-4 w-4" />
-                    ) : (
+                  <div className="relative">
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => handleShare(app)}
+                      className="w-8 h-8 p-0 bg-white/10 backdrop-blur-sm border-white/20 hover:bg-primary hover:text-primary-foreground transition-all duration-300"
+                      title="Share app"
+                    >
                       <Share2 className="h-4 w-4" />
+                    </Button>
+                    
+                    {/* Share Menu */}
+                    {shareMenuAppId === app.id && (
+                      <ShareMenu 
+                        app={app} 
+                        onClose={() => setShareMenuAppId(null)} 
+                      />
                     )}
-                  </Button>
+                  </div>
                   
                   {/* Badge */}
                   {app.badge && (
