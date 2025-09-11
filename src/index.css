@@ -1,0 +1,167 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
+All colors MUST be HSL.
+*/
+
+@layer base {
+  :root {
+    --background: 220 13% 95%;
+    --foreground: 0 0% 16%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+
+    --primary: 238 52% 37%;
+    --primary-foreground: 0 0% 100%;
+    --primary-glow: 238 52% 47%;
+
+    --secondary: 220 14.3% 91.9%;
+    --secondary-foreground: 222.2 47.4% 11.2%;
+
+    --muted: 220 14.3% 91.9%;
+    --muted-foreground: 0 0% 35%;
+
+    --accent: 24 100% 63%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 238 52% 37%;
+
+    --radius: 0.5rem;
+
+    /* Custom Gorilla Tech colors */
+    --tech-primary: 238 52% 37%;
+    --tech-accent: 24 100% 63%;
+    --tech-secondary: 220 14.3% 91.9%;
+    --tech-background: 220 13% 95%;
+    
+    /* Floating button color */
+    --floating-button: 89 39% 49%;
+    
+    /* Dark orange color */
+    --dark-orange: 23 89% 62%;
+    
+    /* Gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(238 52% 37%), hsl(24 100% 63%));
+    --gradient-floating: linear-gradient(135deg, hsl(89 39% 49%), hsl(89 39% 55%));
+    --gradient-hero: linear-gradient(135deg, hsl(238 52% 37% / 0.1), hsl(24 100% 63% / 0.05));
+    --gradient-animated-text: linear-gradient(-45deg, hsl(220 100% 60%), hsl(35 100% 60%), hsl(0 100% 65%), hsl(340 100% 65%), hsl(220 100% 60%));
+    --gradient-animated: linear-gradient(135deg, hsl(238 52% 37%), hsl(24 100% 63%), hsl(238 52% 37%));
+    
+    /* Shadows */
+    --shadow-elegant: 0 10px 30px -10px hsl(238 52% 37% / 0.3);
+    --shadow-card: 0 4px 20px -4px hsl(220 14.3% 91.9% / 0.4);
+    
+    /* Transitions */
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+    --sidebar-background: 0 0% 98%;
+
+    --sidebar-foreground: 240 5.3% 26.1%;
+
+    --sidebar-primary: 240 5.9% 10%;
+
+    --sidebar-primary-foreground: 0 0% 98%;
+
+    --sidebar-accent: 240 4.8% 95.9%;
+
+    --sidebar-accent-foreground: 240 5.9% 10%;
+
+    --sidebar-border: 220 13% 91%;
+
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+
+  .dark {
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+
+    --primary: 238 52% 47%;
+    --primary-foreground: 0 0% 100%;
+    --primary-glow: 238 52% 57%;
+
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 75.1%;
+
+    --accent: 24 100% 68%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 238 52% 47%;
+
+    /* Dark mode gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(238 52% 47%), hsl(24 100% 68%));
+    --gradient-hero: linear-gradient(135deg, hsl(238 52% 47% / 0.1), hsl(24 100% 68% / 0.05));
+    --gradient-animated-text: linear-gradient(-45deg, hsl(220 100% 70%), hsl(35 100% 70%), hsl(0 100% 70%), hsl(340 100% 70%), hsl(220 100% 70%));
+    --gradient-animated: linear-gradient(135deg, hsl(238 52% 47%), hsl(24 100% 68%), hsl(238 52% 47%));
+    --gradient-floating: linear-gradient(135deg, hsl(89 39% 49%), hsl(89 39% 55%));
+    
+    /* Dark mode shadows */
+    --shadow-elegant: 0 10px 30px -10px hsl(238 52% 47% / 0.4);
+    --shadow-card: 0 4px 20px -4px hsl(0 0% 0% / 0.3);
+    --sidebar-background: 240 5.9% 10%;
+    --sidebar-foreground: 240 4.8% 95.9%;
+    --sidebar-primary: 224.3 76.3% 48%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 240 3.7% 15.9%;
+    --sidebar-accent-foreground: 240 4.8% 95.9%;
+    --sidebar-border: 240 3.7% 15.9%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+@layer utilities {
+  .text-gradient-animated {
+    background: var(--gradient-animated-text);
+    background-size: 400% 400%;
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: gradient-shift 4s ease infinite;
+  }
+
+  @keyframes gradient-shift {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+}
