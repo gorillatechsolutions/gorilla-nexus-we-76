@@ -3,7 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
-import { Star, Search, Download, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Star, Search, Download, ChevronLeft, ChevronRight, Share2, Copy, Check } from 'lucide-react';
 import { FaAppStoreIos, FaGlobe } from 'react-icons/fa';
 import { IoLogoGooglePlaystore } from 'react-icons/io5';
 import Header from '@/components/Header';
@@ -13,6 +13,7 @@ const AppSuite = () => {
   const [activeFilter, setActiveFilter] = useState('All Apps');
   const [searchTerm, setSearchTerm] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
+  const [copiedAppId, setCopiedAppId] = useState<number | null>(null);
   const itemsPerPage = 8;
 
   const filters = ['All Apps', 'Mobile Apps', 'Web Apps', 'Desktop Apps'];
@@ -28,7 +29,7 @@ const AppSuite = () => {
       platforms: ['Web'],
       premium: true,
       badge: 'Premium',
-      badgeColor: 'bg-orange-500'
+      badgeVariant: 'premium'
     },
     {
       id: 2,
@@ -50,7 +51,7 @@ const AppSuite = () => {
       platforms: ['Web'],
       premium: true,
       badge: 'Gold',
-      badgeColor: 'bg-yellow-500'
+      badgeVariant: 'gold'
     },
     {
       id: 4,
@@ -72,7 +73,7 @@ const AppSuite = () => {
       platforms: ['Web', 'Play Store'],
       premium: true,
       badge: 'Premium',
-      badgeColor: 'bg-orange-500'
+      badgeVariant: 'premium'
     },
     {
       id: 6,
@@ -94,7 +95,7 @@ const AppSuite = () => {
       platforms: ['Web', 'Play Store'],
       premium: true,
       badge: 'Premium',
-      badgeColor: 'bg-orange-500'
+      badgeVariant: 'premium'
     },
     {
       id: 8,
@@ -106,7 +107,7 @@ const AppSuite = () => {
       platforms: ['App Store', 'Play Store', 'Web'],
       premium: true,
       badge: 'Gold',
-      badgeColor: 'bg-yellow-500'
+      badgeVariant: 'gold'
     },
     {
       id: 9,
@@ -128,7 +129,7 @@ const AppSuite = () => {
       platforms: ['Web', 'App Store'],
       premium: true,
       badge: 'Premium',
-      badgeColor: 'bg-orange-500'
+      badgeVariant: 'premium'
     },
     {
       id: 11,
@@ -188,11 +189,71 @@ const AppSuite = () => {
     }
   };
 
+  const handleShare = async (app: any) => {
+    const shareData = {
+      title: `${app.name} - ${app.category} App`,
+      text: app.description,
+      url: `${window.location.origin}/apps/${app.id}`
+    };
+
+    if (navigator.share && navigator.canShare && navigator.canShare(shareData)) {
+      try {
+        await navigator.share(shareData);
+      } catch (error) {
+        console.log('Share was aborted');
+      }
+    } else {
+      // Fallback: copy to clipboard
+      const shareText = `Check out ${app.name}: ${app.description} ${shareData.url}`;
+      try {
+        await navigator.clipboard.writeText(shareText);
+        setCopiedAppId(app.id);
+        setTimeout(() => setCopiedAppId(null), 2000);
+      } catch (error) {
+        console.error('Failed to copy to clipboard:', error);
+      }
+    }
+  };
+
   return (
-    <div className="min-h-screen bg-background">
-      <Header />
+    <>
+      {/* SEO Meta Tags */}
+      <head>
+        <title>App Suite - Gorilla Tech Solution | Productivity & Business Apps</title>
+        <meta name="description" content="Explore our suite of powerful productivity and business applications. Mobile apps, web apps, and desktop solutions designed to boost your efficiency and drive growth." />
+        <meta name="keywords" content="productivity apps, business apps, mobile apps, web applications, digital solutions, Gorilla Tech Solution" />
+        <meta property="og:title" content="App Suite - Gorilla Tech Solution" />
+        <meta property="og:description" content="Powerful tools designed to boost your productivity and drive business growth. Explore our apps for web, mobile, and desktop." />
+        <meta property="og:image" content="/placeholder.svg" />
+        <meta property="og:url" content={`${window.location.origin}/apps`} />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="App Suite - Gorilla Tech Solution" />
+        <meta name="twitter:description" content="Powerful tools designed to boost your productivity and drive business growth." />
+        <link rel="canonical" href={`${window.location.origin}/apps`} />
+        
+        {/* Structured Data */}
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "SoftwareApplication",
+            "name": "Gorilla Tech Solution App Suite",
+            "description": "A comprehensive suite of productivity and business applications",
+            "url": `${window.location.origin}/apps`,
+            "applicationCategory": "BusinessApplication",
+            "operatingSystem": "Web, iOS, Android",
+            "offers": {
+              "@type": "Offer",
+              "price": "0",
+              "priceCurrency": "USD"
+            }
+          })}
+        </script>
+      </head>
       
-      <main className="container mx-auto px-4 py-12">
+      <div className="min-h-screen bg-background">
+        <Header />
+        
+        <main className="container mx-auto px-4 py-12">
         {/* Header Section */}
         <section className="text-center mb-12">
           <h1 className="text-4xl md:text-5xl font-bold mb-4 text-primary">
@@ -233,7 +294,7 @@ const AppSuite = () => {
         <section>
           <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
             {currentApps.map((app) => (
-              <Card key={app.id} className="relative hover:shadow-lg transition-all duration-300 overflow-hidden">
+              <Card key={app.id} className="relative hover:shadow-lg transition-all duration-300 overflow-hidden group">
                 {/* Left side app icon */}
                 <div className="absolute top-4 left-4 w-12 h-12 bg-gradient-to-br from-primary/20 to-accent/20 rounded-xl flex items-center justify-center shadow-sm overflow-hidden">
                   <img 
@@ -243,12 +304,30 @@ const AppSuite = () => {
                   />
                 </div>
                 
-                {/* Right side badge */}
-                {app.badge && (
-                  <Badge className={`absolute top-4 right-4 z-10 ${app.badgeColor} text-white shadow-sm`}>
-                    {app.badge}
-                  </Badge>
-                )}
+                {/* Right side content area with fit screen design */}
+                <div className="absolute top-4 right-4 flex items-center gap-2 z-10">
+                  {/* Share button */}
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => handleShare(app)}
+                    className="w-8 h-8 p-0 opacity-0 group-hover:opacity-100 transition-all duration-300 hover:bg-primary hover:text-primary-foreground"
+                    title="Share app"
+                  >
+                    {copiedAppId === app.id ? (
+                      <Check className="h-4 w-4" />
+                    ) : (
+                      <Share2 className="h-4 w-4" />
+                    )}
+                  </Button>
+                  
+                  {/* Badge */}
+                  {app.badge && (
+                    <Badge variant={app.badgeVariant as any} className="shadow-sm">
+                      {app.badge}
+                    </Badge>
+                  )}
+                </div>
                 
                 <CardHeader className="pb-4 pt-20">
                   <div className="space-y-3">
@@ -364,12 +443,12 @@ const AppSuite = () => {
         </section>
 
         {/* CTA Section */}
-        <section className="text-center mt-16 bg-muted/50 rounded-lg p-12">
-          <h2 className="text-3xl font-bold mb-4">Ready to Boost Your Productivity?</h2>
+        <section className="text-center mt-16 bg-gradient-to-br from-primary/5 to-accent/5 rounded-lg p-12 border border-primary/10">
+          <h2 className="text-3xl font-bold mb-4 bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">Ready to Boost Your Productivity?</h2>
           <p className="text-muted-foreground mb-6 max-w-2xl mx-auto">
             Discover how our suite of applications can transform your business operations and drive growth.
           </p>
-          <Button size="lg">
+          <Button size="lg" className="bg-gradient-to-r from-primary to-primary-glow hover:from-primary-glow hover:to-primary transition-all duration-300 shadow-lg hover:shadow-xl">
             Explore All Features
           </Button>
         </section>
@@ -377,6 +456,7 @@ const AppSuite = () => {
 
       <Footer />
     </div>
+    </>
   );
 };
 
