@@ -311,7 +311,7 @@ const AppSuite = () => {
                     variant="outline"
                     size="sm"
                     onClick={() => handleShare(app)}
-                    className="w-8 h-8 p-0 opacity-0 group-hover:opacity-100 transition-all duration-300 hover:bg-primary hover:text-primary-foreground"
+                    className="w-8 h-8 p-0 bg-white/10 backdrop-blur-sm border-white/20 hover:bg-primary hover:text-primary-foreground transition-all duration-300"
                     title="Share app"
                   >
                     {copiedAppId === app.id ? (
