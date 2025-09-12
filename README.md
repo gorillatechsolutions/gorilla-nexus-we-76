@@ -2,7 +2,7 @@
 
 ## Project Overview
 
-**URL**: https://lovable.dev/projects/14612794-678a-4e7a-be31-4b3c50bff88b
+**URL**: https://lovable.dev/projects/your-project-id
 
 A comprehensive digital marketing agency website built with modern web technologies, featuring responsive design, SEO optimization, and professional business functionality.
 
@@ -24,7 +24,7 @@ There are several ways of editing your application.
 
 **Use Lovable**
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/14612794-678a-4e7a-be31-4b3c50bff88b) and start prompting.
+Simply visit the [Lovable Project](https://lovable.dev/projects/your-project-id) and start prompting.
 
 Changes made via Lovable will be committed automatically to this repo.
 
@@ -129,7 +129,7 @@ src/
 
 ## How can I deploy this project?
 
-Simply open [Lovable](https://lovable.dev/projects/14612794-678a-4e7a-be31-4b3c50bff88b) and click on Share -> Publish.
+Simply open [Lovable](https://lovable.dev/projects/your-project-id) and click on Share -> Publish.
 
 ## Can I connect a custom domain to my Lovable project?
 
