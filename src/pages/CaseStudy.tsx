@@ -8,6 +8,7 @@ import { Pagination, PaginationContent, PaginationItem, PaginationLink, Paginati
 import { ArrowRight, Calendar, Clock, User, Tag, ExternalLink, TrendingUp, Users, Star, Target, Zap, Award, Eye, MessageSquare, Share2, Search } from 'lucide-react';
 import { useState, useMemo } from 'react';
 import { useToast } from '@/hooks/use-toast';
+import { Link } from 'react-router-dom';
 const CaseStudy = () => {
   const {
     toast
@@ -510,7 +511,8 @@ const CaseStudy = () => {
 
           {/* All Case Studies Grid */}
           <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 mb-12">
-            {paginatedCaseStudies.length > 0 ? paginatedCaseStudies.map(caseStudy => <Card key={caseStudy.id} className="group hover:shadow-lg transition-all duration-300 overflow-hidden">
+            {paginatedCaseStudies.length > 0 ? paginatedCaseStudies.map(caseStudy => <Link key={caseStudy.id} to={`/case-study/${caseStudy.id}`}>
+                <Card className="group hover:shadow-lg transition-all duration-300 overflow-hidden cursor-pointer h-full">
                   <div className="aspect-video bg-gradient-to-br from-primary/10 to-accent/10 relative">
                     <Badge className="absolute top-3 left-3 text-xs">{caseStudy.category}</Badge>
                     {caseStudy.featured && <Star className="absolute top-3 right-3 h-5 w-5 text-yellow-500 fill-current" />}
@@ -557,13 +559,14 @@ const CaseStudy = () => {
                         <Button variant="ghost" size="sm" className="h-6 w-6 p-0" onClick={() => handleShare(caseStudy)}>
                           <Share2 className="h-3 w-3" />
                         </Button>
-                        <Button variant="ghost" size="sm" className="h-6 px-2 text-xs">
+                        <Button variant="ghost" size="sm" className="h-6 px-2 text-xs hover:text-primary">
                           Read More
                         </Button>
                       </div>
                     </div>
                   </CardContent>
-                </Card>) : <div className="col-span-full text-center py-12">
+                </Card>
+              </Link>) : <div className="col-span-full text-center py-12">
                 <div className="text-muted-foreground">
                   <Search className="h-12 w-12 mx-auto mb-4 opacity-50" />
                   <h3 className="text-lg font-semibold mb-2">No case studies found</h3>

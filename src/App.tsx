@@ -13,6 +13,7 @@ import AppSuite from "./pages/AppSuite";
 import Plans from "./pages/Plans";
 import Contact from "./pages/Contact";
 import CaseStudy from "./pages/CaseStudy";
+import CaseStudyDetail from "./pages/CaseStudyDetail";
 import CollabWithUs from "./pages/CollabWithUs";
 import InvestWithUs from "./pages/InvestWithUs";
 import WebsiteRoadmap from "./pages/WebsiteRoadmap";
@@ -47,6 +48,7 @@ const AppContent = () => {
           <Route path="/plans" element={<Plans />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/case-study" element={<CaseStudy />} />
+          <Route path="/case-study/:id" element={<CaseStudyDetail />} />
           <Route path="/collab" element={<CollabWithUs />} />
           <Route path="/invest" element={<InvestWithUs />} />
           <Route path="/roadmap" element={<WebsiteRoadmap />} />
