@@ -69,5 +69,24 @@
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
+    
+    <!-- Defer non-critical scripts -->
+    <script>
+      // Defer loading of non-critical features after initial render
+      window.addEventListener('load', () => {
+        // Preload next route chunks for faster navigation
+        if ('requestIdleCallback' in window) {
+          requestIdleCallback(() => {
+            const routes = ['/about', '/services', '/contact'];
+            routes.forEach(route => {
+              const link = document.createElement('link');
+              link.rel = 'prefetch';
+              link.href = route;
+              document.head.appendChild(link);
+            });
+          });
+        }
+      });
+    </script>
   </body>
 </html>
