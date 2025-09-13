@@ -9,6 +9,13 @@
     <!-- Performance & SEO optimizations -->
     <link rel="dns-prefetch" href="//fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin />
+    <link rel="dns-prefetch" href="//placehold.co" />
+    <link rel="preconnect" href="https://placehold.co" crossorigin />
+    
+    <!-- Critical resource preloading -->
+    <link rel="modulepreload" href="/src/main.tsx" />
+    <link rel="preload" href="https://placehold.co/600x600" as="image" fetchpriority="high" />
+    
     <link rel="icon" href="https://placehold.co/32x32/png" type="image/png">
     
     <!-- Critical CSS will be inlined here by Vite -->
