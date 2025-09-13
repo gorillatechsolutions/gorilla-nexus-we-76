@@ -150,7 +150,7 @@ const HeroSection = () => {
               {/* Main Hero Image */}
               <div className="aspect-square w-full rounded-full bg-gradient-to-br from-primary/15 via-primary/10 to-primary/5 p-1 lg:p-2 relative overflow-hidden">
                 <div className="w-full h-full bg-gradient-to-br from-primary/20 via-primary/15 to-primary/5 rounded-full flex items-center justify-center relative border border-primary/5">
-                  <img src="https://placehold.co/600x600" alt="Gorilla Tech Solution - Leading Digital Marketing and Web Development Agency Team" width={600} height={600} loading="eager" className="w-full h-full object-cover rounded-full relative z-10" data-ai-hint="professional digital agency team or modern technology workspace" />
+                  <img src="https://placehold.co/600x600" alt="Gorilla Tech Solution - Leading Digital Marketing and Web Development Agency Team" width={600} height={600} loading="eager" fetchPriority="high" className="w-full h-full object-cover rounded-full relative z-10" data-ai-hint="professional digital agency team or modern technology workspace" />
                 </div>
               </div>
               

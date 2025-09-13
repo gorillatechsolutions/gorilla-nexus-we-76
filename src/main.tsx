@@ -6,6 +6,7 @@ import "./index.css";
 const loadNonCriticalResources = () => {
   // Preload critical images
   const criticalImages = [
+    'https://placehold.co/600x600', // Hero LCP image
     '/src/assets/process-image-new.png',
     '/src/assets/stats-image-new.png'
   ];
